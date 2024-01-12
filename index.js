@@ -1,5 +1,9 @@
-const { Command } = require('commander');
+import { Command } from 'commander';
+import inquirer from 'inquirer';
 const program = new Command();
+
+
+
 
 program
   .name('courses manager')
@@ -8,11 +12,25 @@ program
 
   program.command('add').alias('a')
   .description('Add a course to')
-  .option('--price <price>', 'Add a price')
-  .argument('<title>', 'Add a course title')
-  .action((param,option) =>{
-    console.log("param,option",param,option);
-  })
+  
+  .action(() =>{
+    inquirer
+    .prompt([
+      {type:'input',
+      name: 'programming',
+      message:'What is your favorite programming language'}
+    ])
+    .then((answers) => {
+      // Use user feedback for... whatever!!
+      console.log(answers);
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        // Prompt couldn't be rendered in the current environment
+      } else {
+        // Something else went wrong
+      }
+    });  })
 
   program.command('list').alias('l')
   .description('List all courses')
